@@ -3,7 +3,7 @@
 ## Description
 - Updated Joker-119's customitems to EXILED 9.5.1 and re-added or changed features. 
 - New custom items coming very soon.
-- If you encounter issues contact me on discord: adam2541
+- If you encounter issues/bugs open Issue on github or contact me on discord: adam2541
 ### Item list
 ItemName | ItemID | Description
 :---: | :---: | :------
