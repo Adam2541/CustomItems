@@ -121,6 +121,10 @@ ShotgunDoubleShot
 ShotgunSingleShot
 NoRifleStock
 ```
+### Future Plans
+ - Adding keybinds
+ - Adding custom googles.
+
 ### Default Config 
 ```
 # The list of antimemeticpills.
@@ -523,12 +527,3 @@ sniper_rifle:
     z: 1
 
 ```
-### Future Plans
- - Adding keybinds
- - Adding custom googles.
-### Credits
- - NeonWizard for the original TranqGun
- - Killer0992 for the original Shotgun
- - Dimenzio for the SpawnGrenade method
- - Michal78900 for SCP-1499
- - SebasCapo for slight API rework.
