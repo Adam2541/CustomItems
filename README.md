@@ -1,9 +1,9 @@
 # CustomItems
 
 ## Description
-Updated Joker-119's customitems to EXILED 9.5.1 and re-added or changed features. 
-New custom items coming very soon.
-If you encounter issues contact me on discord: adam2541
+- Updated Joker-119's customitems to EXILED 9.5.1 and re-added or changed features. 
+- New custom items coming very soon.
+- If you encounter issues contact me on discord: adam2541
 ### Item list
 ItemName | ItemID | Description
 :---: | :---: | :------
@@ -124,7 +124,6 @@ NoRifleStock
 ### Future Plans
  - Adding keybinds
  - Adding custom googles.
- - 
 ### Credits
  - NeonWizard for the original TranqGun
  - Killer0992 for the original Shotgun
