@@ -40,7 +40,7 @@ ci info | (item name/id) | none | Prints a more detailed list of info about a sp
 ci list | none | none| Lists the names and ID's of all installed and enabled custom items on the server.
 .detonate | none | none | Detonates any C4-Charges you have placed, if you are within range of them.
 
-### Valid Dynamic Spawn Location names (v. 14.0.1)
+### Valid Dynamic Spawn Location names (v. 14.0.2)
 The following list of locations are the only ones that are able to be used in the SpawnLocation configs for each item:
 (Their names must be typed EXACTLY as they are listed, otherwise you will probably break your item config file)
 ```
@@ -72,7 +72,7 @@ InsideNukeArmory
 InsideServersBottom
 InsideSurfaceNuke
 ```
-### Attachment Names (v. 14.0.1)
+### Attachment Names (v. 14.0.2)
 ```
 None
 IronSights
@@ -129,8 +129,8 @@ NoRifleStock
 ```
 # The list of antimemeticpills.
 anti_memetic_pills:
-- id: 13
-  name: 'AM-119'
+- id: 1
+  name: 'Anti-Memetic pills'
   description: 'Drugs that make you forget things. If you use these while you are targeted by SCP-096, you will forget what his face looks like, and thus no longer be a target.'
   weight: 1
   spawn_properties:
@@ -149,8 +149,8 @@ anti_memetic_pills:
   type: None
 # The list of C4 charges.
 c4_charge:
-- id: 15
-  name: 'C4-119'
+- id: 2
+  name: 'Semtex C4'
   weight: 0.75
   spawn_properties:
     limit: 5
@@ -161,14 +161,20 @@ c4_charge:
       chance: 25
     - location: InsideNukeArmory
       chance: 50
-    - location: Inside049Armory
-      chance: 50
     - location: InsideSurfaceNuke
       chance: 100
     static_spawn_points: []
     role_spawn_points: []
     room_spawn_points: []
-    locker_spawn_points: []
+    locker_spawn_points:
+    - zone: Unspecified
+      use_chamber: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      type: Misc
+      chance: 40
   description: 'Explosive charge that can be remotly detonated.'
   # Should C4 charge stick to walls / ceiling.
   is_sticky: true
@@ -198,7 +204,7 @@ c4_command:
   description: 'Detonate command for detonating C4 charges'
 # The list of deflector shields.
 deflector_shield:
-- id: 18
+- id: 3
   name: 'Deflector shield'
   description: 'A deflector shield that reflects bullets back at the shooter'
   weight: 1.64999998
@@ -221,24 +227,34 @@ deflector_shield:
     z: 1
 # The list of EMP grenades.
 e_m_pgrenade:
-- id: 0
-  name: 'EM-119'
+- id: 4
+  name: 'S4-EMP'
   weight: 1.14999998
   spawn_properties:
-    limit: 1
+    limit: 3
     dynamic_spawn_points:
     - location: Inside173Gate
       chance: 100
-    static_spawn_points:
-    - name: 'somewhere'
-      chance: 50
-      position:
-        x: 100
-        y: 25
-        z: 40
+    static_spawn_points: []
     role_spawn_points: []
     room_spawn_points: []
-    locker_spawn_points: []
+    locker_spawn_points:
+    - zone: Unspecified
+      use_chamber: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      type: Misc
+      chance: 40
+    - zone: Unspecified
+      use_chamber: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      type: LargeGun
+      chance: 60
   description: 'This flashbang has been modified to emit a short-range EMP when it detonates. When detonated, any lights, doors, cameras and in the room, as well as all speakers in the facility, will be disabled for a short time.'
   explode_on_collision: true
   fuse_time: 1.5
@@ -259,8 +275,8 @@ e_m_pgrenade:
     z: 1
 # The list of grenade launchers.
 grenade_launcher:
-- id: 1
-  name: 'GL-119'
+- id: 5
+  name: 'M320-GL'
   description: 'This weapon will launch grenades in the direction you are firing, instead of bullets. Requires Frag Grenades in your inventory to reload.'
   weight: 2.95000005
   spawn_properties:
@@ -285,21 +301,35 @@ grenade_launcher:
     z: 1
 # The list of implosion grenades.
 implosion_grenade:
-- id: 2
-  name: 'IG-119'
+- id: 6
+  name: 'M49-IG'
   description: 'This grenade does almost 0 damage, however it will succ nearby players towards the center of the implosion area.'
   weight: 0.649999976
   spawn_properties:
-    limit: 1
+    limit: 3
     dynamic_spawn_points:
-    - location: Inside106Primary
-      chance: 50
     - location: InsideHczArmory
       chance: 100
     static_spawn_points: []
     role_spawn_points: []
     room_spawn_points: []
-    locker_spawn_points: []
+    locker_spawn_points:
+    - zone: Unspecified
+      use_chamber: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      type: Misc
+      chance: 40
+    - zone: Unspecified
+      use_chamber: false
+      offset:
+        x: 0
+        y: 0
+        z: 0
+      type: LargeGun
+      chance: 40
   explode_on_collision: true
   fuse_time: 1.5
   # The % of normal frag grenade damage this grenade will deal to those in it's radius.
@@ -321,8 +351,8 @@ implosion_grenade:
     z: 1
 # The list of lethal injections.
 lethal_injection:
-- id: 3
-  name: 'LJ-119'
+- id: 7
+  name: 'CZ-LJ'
   description: 'This is a Lethal Injection that, when used, will cause SCP-096 to immediately leave his enrage, regardless of how many targets he currently has, if you are one of his current targets. You always die when using this, even if there''s no enrage to break, or you are not a target.'
   weight: 1
   spawn_properties:
@@ -343,8 +373,8 @@ lethal_injection:
   type: None
 # The list of medi guns.
 medi_gun:
-- id: 5
-  name: 'MG-119'
+- id: 8
+  name: 'B87-MG'
   description: 'A specialized weapon that fires darts filled with a special mixture of Painkillers, Antibiotics, Antiseptics and other medicines. When fires at friendly targets, they will be healed. When fired at instances of SCP-049-2, they will be slowly converted back to human form. Does nothing when fired at anyone else.'
   weight: 1.95000005
   damage: 0
@@ -379,7 +409,7 @@ medi_gun:
     z: 1
 # The list of SCP-127´s
 s_c_p127:
-- id: 7
+- id: 9
   name: 'SCP-127'
   description: 'SCP-127 is a pistol that slowly regenerates it''s ammo over time but cannot be reloaded normally.'
   weight: 1.45000005
@@ -408,14 +438,14 @@ s_c_p127:
     z: 1
 # The list of SCP-1499´s
 s_c_p1499:
-- id: 8
+- id: 10
   name: 'SCP-1499'
   description: 'The gas mask that temporarily teleports you to another dimension, when you put it on.'
   weight: 1.5
   spawn_properties:
     limit: 1
     dynamic_spawn_points:
-    - location: InsideHidChamber
+    - location: Inside330
       chance: 10
     static_spawn_points: []
     role_spawn_points: []
@@ -435,7 +465,7 @@ s_c_p1499:
   type: None
 # The list of SCP-2818´s
 s_c_p2818:
-- id: 14
+- id: 11
   name: 'SCP-2818'
   description: 'When this weapon is fired, it uses the biomass of the shooter as the bullet.'
   weight: 3.95000005
@@ -444,8 +474,8 @@ s_c_p2818:
     dynamic_spawn_points:
     - location: InsideHidChamber
       chance: 60
-    - location: InsideHczArmory
-      chance: 40
+    - location: InsideLczArmory
+      chance: 20
     static_spawn_points: []
     role_spawn_points: []
     room_spawn_points: []
@@ -469,7 +499,7 @@ s_c_p714:
     limit: 1
     dynamic_spawn_points:
     - location: Inside049Armory
-      chance: 50
+      chance: 60
     static_spawn_points: []
     role_spawn_points: []
     room_spawn_points: []
@@ -501,18 +531,18 @@ s_c_p714:
   type: None
 # The list of sniper rifles.
 sniper_rifle:
-- id: 10
-  name: 'SR-119'
+- id: 13
+  name: 'M82-SR'
   description: 'This modified E-11 Rifle fires high-velocity anti-personnel sniper rounds.'
   weight: 3.25
   clip_size: 1
   spawn_properties:
     limit: 1
     dynamic_spawn_points:
-    - location: InsideHidChamber
-      chance: 100
+    - location: InsideNukeArmory
+      chance: 80
     - location: InsideHczArmory
-      chance: 40
+      chance: 60
     static_spawn_points: []
     role_spawn_points: []
     room_spawn_points: []
@@ -525,5 +555,6 @@ sniper_rifle:
     x: 1
     y: 1
     z: 1
+
 
 ```
