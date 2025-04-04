@@ -60,10 +60,11 @@ InsideEscapeSecondary
 InsideGateA
 InsideGateB
 InsideGateGR18
+InsideGateGR18Glass
 InsideHczArmory
-InsideHid
-InsideHidLeft
-InsideHidRight
+InsideHidChamber
+InsideHidUpper
+InsideHidLower
 InsideIntercom
 InsideLczArmory
 InsideLczCafe
@@ -71,6 +72,7 @@ InsideLczWc
 InsideNukeArmory
 InsideServersBottom
 InsideSurfaceNuke
+Inside939Cryo
 ```
 ### Attachment Names (v. 14.0.2)
 ```
