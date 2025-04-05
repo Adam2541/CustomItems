@@ -95,7 +95,7 @@ public class GrenadeLauncher : CustomWeapon
             {
                 if (item.Type != ItemType.SCP2176 && item.Type != ItemType.GrenadeHE && item.Type != ItemType.GrenadeFlash && item.Type != ItemType.SCP018)
                     continue;
-                loadedGrenade = item.Type == ItemType.GrenadeFlash ? ProjectileType.Flashbang : item.Type == ItemType.GrenadeHE ? ProjectileType.FragGrenade : item.Type == ItemType.SCP018 ? ProjectileType.Scp018 : ProjectileType.Scp2176;
+                loadedGrenade = item.Type.GetProjectileType();
                 ev.Player.RemoveItem(item);
                 Log.Debug($"{Name}.{nameof(OnReloading)}: {ev.Player.Nickname} reloaded {loadedGrenade}");
                 ev.IsAllowed = true;
