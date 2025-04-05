@@ -96,7 +96,7 @@ public class AntiMemeticPills : CustomItem
             return;
         IEnumerable<Player> scp096S = Player.Get(RoleTypeId.Scp096);
 
-        Timing.CallDelayed(1f, () =>
+        Timing.CallDelayed(0.05f, () =>
         {
             foreach (Player scp in scp096S)
             {
