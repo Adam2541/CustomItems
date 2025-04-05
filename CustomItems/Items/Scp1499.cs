@@ -58,8 +58,8 @@ public class Scp1499 : CustomItem
     [Description("How long the SCP-1499 can be wore, before automaticly player takes it off. (set to 0 for no limit)")]
     public float Duration { get; set; } = 15f;
 
-    [Description("The location to teleport when using SCP-1499. Default is tutorial/admin tower.")]
-    public Vector3 TeleportPosition { get; set; } = new(38.464f, 1014.112f, -32.689f);
+    [Description("The location to teleport when using SCP-1499. Default is the third tower. Not the admin/tutorial tower.")]
+    public Vector3 TeleportPosition { get; set; } = new(-15.559f, 1015f, -31.578f);
 
     /// <inheritdoc/>
     protected override void SubscribeEvents()
