@@ -354,7 +354,7 @@ implosion_grenade:
 # The list of lethal injections.
 lethal_injection:
 - id: 7
-  name: 'CZ-LJ'
+  name: 'Uus-LJ'
   description: 'This is a Lethal Injection that, when used, will cause SCP-096 to immediately leave his enrage, regardless of how many targets he currently has, if you are one of his current targets. You always die when using this, even if there''s no enrage to break, or you are not a target.'
   weight: 1
   spawn_properties:
@@ -424,14 +424,16 @@ s_c_p127:
     role_spawn_points: []
     room_spawn_points: []
     locker_spawn_points: []
-  # The amount of extra damage this weapon does, as a multiplier.
-  damage_multiplier: 1
+  # Sets the SCP-127 damage.
+  damage: 17
+  # Sets the SCP-127 Magazine size.
   clip_size: 25
   # How often ammo will be regenerated. Regeneration occurs at all times, however this timer is reset when the weapon is picked up or dropped.
   regeneration_delay: 10
   # The amount of ammo that will be regenerated each regeneration cycle.
   regeneration_amount: 2
-  attachments: []
+  # Sets the delay in which will the player holding SCP-127 getting health regeneration
+  health_regeneration_delay: 4
   type: None
   friendly_fire: false
   scale:
@@ -455,7 +457,7 @@ s_c_p1499:
     locker_spawn_points: []
   # How long the SCP-1499 can be wore, before automaticly player takes it off. (set to 0 for no limit)
   duration: 15
-  # The location to teleport when using SCP-1499. Default is tutorial/admin tower.
+  # The location to teleport when using SCP-1499. Default is the third tower. Not the admin/tutorial tower.
   teleport_position:
     x: 38.464
     y: 1014.112
@@ -557,6 +559,4 @@ sniper_rifle:
     x: 1
     y: 1
     z: 1
-
-
 ```
