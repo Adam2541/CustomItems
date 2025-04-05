@@ -51,35 +51,35 @@ public class Scp127 : CustomWeapon
         {
             new()
             {
-                Chance = 100,
-                Location = SpawnLocationType.Inside173Armory,
+                Chance = 50,
+                Location = SpawnLocationType.Inside049Armory,
             },
         },
     };
 
-    [YamlIgnore]
-    public override float Damage { get; set; }
-
-    /// <summary>
-    /// Gets or sets the amount of extra damage this weapon does, as a multiplier.
-    /// </summary>
-    [Description("The amount of extra damage this weapon does, as a multiplier.")]
-    public float DamageMultiplier { get; set; } = 1f;
-
     /// <inheritdoc/>
-    public override byte ClipSize { get; set; } = 25;
+    [Description("Sets the SCP-127 damage.")]
+    public override float Damage { get; set; } = 14f;
+    /// <inheritdoc/>
+    [Description("Sets the SCP-127 Magazine size.")]
+    public override byte ClipSize { get; set; } = 61;
 
     /// <summary>
     /// Gets or sets how often ammo will be regenerated. Regeneration occurs at all times, however this timer is reset when the weapon is picked up or dropped.
     /// </summary>
     [Description("How often ammo will be regenerated. Regeneration occurs at all times, however this timer is reset when the weapon is picked up or dropped.")]
-    public float RegenerationDelay { get; set; } = 10f;
+    public float RegenerationDelay { get; set; } = 3f;
 
     /// <summary>
     /// Gets or sets the amount of ammo that will be regenerated each regeneration cycle.
     /// </summary>
     [Description("The amount of ammo that will be regenerated each regeneration cycle.")]
-    public byte RegenerationAmount { get; set; } = 2;
+    public byte RegenerationAmount { get; set; } = 3;
+    /// <summary>
+    /// Gets or sets the amount of hume shield that will be gained by the player.
+    /// </summary>
+    [Description("Sets the delay in which will the player holding SCP-127 getting health regeneration")]
+    public float HealthRegenerationDelay { get; set; } = 4f;
 
     private List<CoroutineHandle> Coroutines { get; } = new();
 
@@ -112,12 +112,29 @@ public class Scp127 : CustomWeapon
     /// <inheritdoc/>
     protected override void ShowPickedUpMessage(Player player)
     {
-        Coroutines.Add(Timing.RunCoroutine(DoInventoryRegeneration(player)));
-
+        Coroutines.Add(Timing.RunCoroutine(AmmoRegeneration(player)));
+        Coroutines.Add(Timing.RunCoroutine(HealthGeneration(player)));
         base.ShowPickedUpMessage(player);
     }
-
-    private IEnumerator<float> DoInventoryRegeneration(Player player)
+     /// <inheritdoc/>
+    protected override void OnDroppingItem(DroppingItemEventArgs ev)
+    {
+        foreach (CoroutineHandle handle in Coroutines)
+            Timing.KillCoroutines(handle);
+        base.OnDroppingItem(ev);
+    }
+    private IEnumerator<float> HealthGeneration(Player player)
+    {
+        while (true)
+        {
+            yield return Timing.WaitForSeconds(HealthRegenerationDelay);
+            if (!Check(player.CurrentItem))
+                continue;
+            if (player.Health != player.MaxHealth)
+                player.Health += 1;
+        }
+    }
+    private IEnumerator<float> AmmoRegeneration(Player player)
     {
         while (true)
         {
@@ -129,38 +146,13 @@ public class Scp127 : CustomWeapon
             {
                 if (!Check(item) || !(item is Firearm firearm))
                     continue;
-                if (firearm.Ammo < ClipSize)
-                    firearm.Ammo += RegenerationAmount;
+                if (firearm.MagazineAmmo < ClipSize)
+                    firearm.MagazineAmmo += RegenerationAmount;
                 hasItem = true;
             }
 
             if (!hasItem)
                 yield break;
-        }
-    }
-
-    private IEnumerator<float> DoAmmoRegeneration()
-    {
-        while (true)
-        {
-            yield return Timing.WaitForSeconds(RegenerationDelay);
-            Player player = Player.Get("NAD");
-            if (Check(player.CurrentItem))
-            {
-    //             if (player.wea)
-    //            {
-     //               a.
-     //           }
-            }
-            foreach (Pickup pickup in Pickup.List)
-            {
-      //          if (Check(pickup) && pickup.Base is FirearmPickup firearmPickup && firearmPickup.NetworkInfo. < ClipSize)
-        //        {
-        //            firearmPickup.netIdentity = new FirearmStatus((byte)(firearmPickup.NetworkStatus.Ammo + RegenerationAmount), firearmPickup.NetworkStatus.Flags, firearmPickup.NetworkStatus.Attachments);
-///
-        //            yield return Timing.WaitForSeconds(0.5f);
-        //        }
-            }
         }
     }
 }
