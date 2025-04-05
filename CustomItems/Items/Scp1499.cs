@@ -173,7 +173,7 @@ public class Scp1499 : CustomItem
             }
             else
             {
-                if (Lift.List.Where(lift => lift.Name.Contains("Gate")).Any(lift => (player.Position - lift.Position).sqrMagnitude <= 10f))
+                if (player.Lift != null)
                 {
                     shouldKill = true;
                 }
@@ -190,7 +190,7 @@ public class Scp1499 : CustomItem
             }
             else
             {
-                if (Lift.List.Where(lift => lift.Name.Contains("El")).Any(lift => (player.Position - lift.Position).sqrMagnitude <= 10f))
+                if (player.Lift.Type == ElevatorType.LczA || player.Lift.Type == ElevatorType.LczB)
                 {
                     shouldKill = true;
                 }
