@@ -54,8 +54,8 @@ public class DeflectorShield : CustomItem
         {
             new()
             {
-                Chance = 10,
-                Location = SpawnLocationType.InsideHid,
+                Chance = 30,
+                Location = SpawnLocationType.InsideGr18Glass,
             },
         },
     };
@@ -97,7 +97,7 @@ public class DeflectorShield : CustomItem
         deflectorPlayers.Add(player);
     }
     /// <inheritdoc/>
-    protected override void OnDropping(DroppingItemEventArgs ev)
+    protected override void OnDroppingItem(DroppingItemEventArgs ev)
     {
         if (deflectorPlayers.Contains(ev.Player))
         {
