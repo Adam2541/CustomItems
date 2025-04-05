@@ -68,12 +68,14 @@ public class Scp2818 : CustomWeapon
 
     /// <inheritdoc/>
     [Description("The amount of damage the weapon deals when the projectile hits another player.")]
-    public override float Damage { get; set; } = 110f;
+    public override float Damage { get; set; } = 100f;
 
     /// <inheritdoc/>
-    protected override void OnShooting(ShootingEventArgs ev)
+    protected override void OnHurting(HurtingEventArgs ev)
     {
-        ev.Player.Health += ev.Player.Health - 35;
+        ev.Player.Health += ev.Player.Health - 20;
+        Log.Debug($"Hit with SCP-2818 player: {ev.Player}. Target Health: {ev.Player.Health}");
+        base.OnHurting(ev);
     }
     protected override void OnReloaded(ReloadedWeaponEventArgs ev)
     {
