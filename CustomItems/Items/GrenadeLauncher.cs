@@ -91,9 +91,6 @@ public class GrenadeLauncher : CustomWeapon
     {
         if (UseGrenades)
         {
-           // ev.IsAllowed = false;
-          //  if (!(ev.Player.CurrentItem is Firearm firearm) || firearm.Ammo >= ClipSize)
-            //    return;
             foreach (Item item in ev.Player.Items.ToList())
             {
                 if (item.Type != ItemType.SCP2176 && item.Type != ItemType.GrenadeHE && item.Type != ItemType.GrenadeFlash && item.Type != ItemType.SCP018)
@@ -111,11 +108,11 @@ public class GrenadeLauncher : CustomWeapon
     /// <inheritdoc/>
     protected override void OnShooting(ShootingEventArgs ev)
     {
-        Projectile projectile;
+        Projectile projectile; //Needed for Scp2176 popping on impact and projectiles flying out of the gun.
         switch (loadedGrenade)
         {
-            case ProjectileType.Scp018:
-                projectile = ev.Player.ThrowGrenade(ProjectileType.Scp018).Projectile;
+            case ProjectileType.FragGrenade:
+                projectile = ev.Player.ThrowGrenade(ProjectileType.FragGrenade).Projectile;
                 break;
             case ProjectileType.Flashbang:
                 projectile = ev.Player.ThrowGrenade(ProjectileType.Flashbang).Projectile;
@@ -124,7 +121,7 @@ public class GrenadeLauncher : CustomWeapon
                 projectile = ev.Player.ThrowGrenade(ProjectileType.Scp2176).Projectile;
                 break;
             default:
-                projectile = ev.Player.ThrowGrenade(ProjectileType.FragGrenade).Projectile;
+                 projectile = ev.Player.ThrowGrenade(ProjectileType.Scp018).Projectile;
                 break;
         }
         if (ev.Player.GetAmmo(AmmoType.Nato762) < 1)
