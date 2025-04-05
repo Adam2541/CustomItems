@@ -73,7 +73,7 @@ public class Scp714 : CustomItem
     public List<EffectType> Scp714Effects { get; set; } = new()
     {
         EffectType.Deafened,
-        EffectType.Flashed,
+        EffectType.Concussed,
     };
 
     public List<EffectType> PreventedEffects { get; set; } = new()
@@ -83,6 +83,7 @@ public class Scp714 : CustomItem
         EffectType.Concussed,
         EffectType.Blinded,
         EffectType.Exhausted,
+        EffectType.AmnesiaVision,
     };
 
     /// <summary>
@@ -174,11 +175,10 @@ public class Scp714 : CustomItem
     {
         if (equipped)
         {
-            player.EnableEffect(EffectType.Blinded);
             foreach (EffectType effect in Scp714Effects)
             {
-         //       player.EnableEffect(effect);
-          //      Log.Debug($"{effect} enabled!");
+                player.EnableEffect(effect);
+                Log.Debug($"{effect} enabled!");
             }
             equippedPlayers.Add(player);
             player.ShowHint(PutOnMessage);
@@ -187,8 +187,8 @@ public class Scp714 : CustomItem
         {
             foreach (EffectType effect in Scp714Effects)
             {
-            //    player.DisableEffect(effect);
-          //      Log.Debug($"{effect} disabled!");
+                player.DisableEffect(effect);
+                Log.Debug($"{effect} disabled!");
             }
             equippedPlayers.Remove(player);
             player.ShowHint(TakeOffMessage);
