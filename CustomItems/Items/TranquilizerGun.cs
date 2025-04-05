@@ -39,7 +39,6 @@ using Random = UnityEngine.Random;
 /// <inheritdoc />
 [CustomItem(ItemType.GunCOM18)]
 
-//DOES NOT WORK - when spawned and created ragdoll method doesnt fire and gives error. No idea why it is not working - waiting for newer exiled version.
 public class TranquilizerGun : CustomWeapon
 {
     private readonly Dictionary<Player, float> tranquilizedPlayers = new();
@@ -113,7 +112,32 @@ public class TranquilizerGun : CustomWeapon
     }
     protected override void OnHurting(HurtingEventArgs ev)
     {
-        Timing.RunCoroutine(TranquilizePlayer(ev.Player, 5f));
+        base.OnHurting(ev);
+        if (ev.Attacker == ev.Player)
+            return;
+        if (ev.Player.Role.Team == Team.SCPs)
+        {
+            int r = Random.Range(1, 101);
+            Log.Debug($"{Name}: SCP roll: {r} (must be greater than {ScpResistChance})");
+            if (r <= ScpResistChance)
+            {
+                Log.Debug($"{Name}: {r} is too low, no tranq.");
+                return;
+            }
+        }
+        float duration = Duration;
+
+        if (!tranquilizedPlayers.TryGetValue(ev.Player, out _))
+            tranquilizedPlayers.Add(ev.Player, 1);
+
+        tranquilizedPlayers[ev.Player] *= ResistanceModifier;
+        Log.Debug($"{Name}: Resistance Duration Mod: {tranquilizedPlayers[ev.Player]}");
+
+        duration -= tranquilizedPlayers[ev.Player];
+        Log.Debug($"{Name}: Duration: {duration}");
+
+        if (duration > 0f)
+            Timing.RunCoroutine(TranquilizePlayer(ev.Player, duration));
     }
 private IEnumerator<float> TranquilizePlayer(Player player, float duration)
 {
@@ -156,7 +180,7 @@ private IEnumerator<float> TranquilizePlayer(Player player, float duration)
     }
 
     Ragdoll? ragdoll = null;
-    if (player.Role.Type != RoleTypeId.Scp106) // Internal error here - if i want to create and spawn ragdoll i get error. No clue why.
+    if (player.Role.Type != RoleTypeId.Scp106)
         ragdoll = Ragdoll.CreateAndSpawn(player.Role, player.DisplayNickname, "Tranquilized", player.Position, player.ReferenceHub.PlayerCameraReference.rotation, player);
 
     if (player.Role is Scp096Role scp)
@@ -194,8 +218,8 @@ private IEnumerator<float> TranquilizePlayer(Player player, float duration)
         player.Scale = previousScale;
         player.Health = newHealth;
 
-      //  if (!DropItems)
-     //       player.CurrentItem = previousItem;
+        if (!DropItems)
+            player.CurrentItem = previousItem;
 
         foreach (StatusEffectBase effect in activeEffects.Where(effect => (effect.Duration - duration) > 0))
             player.EnableEffect(effect, effect.Duration);
