@@ -161,9 +161,34 @@ public class ImplosionGrenade : CustomGrenade
                 Log.Debug($"{player.Nickname} - {line}");
                 if (line)
                 {
-                    effectedPlayers.Add(player);
-                    Coroutines.Add(Timing.RunCoroutine(DoSuction(player, ev.Projectile.Transform.position + (Vector3.up * 1.5f))));
+                    Log.Debug(player.CurrentRoom.Doors.Count);
+                    if (ev.Projectile.Room != player.CurrentRoom) //If a player and projectile are not in the same room we are not doing expensive calculations.
+                    {
+                        Log.Debug("Found door between projectile and player!");
+                        if (!ev.Projectile.Room.Doors.Intersect(player.CurrentRoom.Doors).First().IsFullyClosed)
+                        {
+                            ev.Projectile.Room.Doors.Intersect(player.CurrentRoom.Doors).First().Lock(SuctionCount * SuctionTickRate + 0.7f, DoorLockType.NoPower);
+                            effectedPlayers.Add(player);
+                            Coroutines.Add(Timing.RunCoroutine(DoSuction(player, ev.Projectile.Transform.position + (Vector3.up * 1.5f))));
+                            Log.Debug("Found door is open. sucking: " + player.DisplayNickname);
+                        }
+                        else Log.Debug("Found door is fully closed!");
+                    }
+                    else if (player.CurrentRoom.Doors.Count >= 2) //If the room has more than 1 door we will do expensive calculations. This is not functional, but will be in future update!
+                    {
+                        Log.Debug("ELSE::IF");
+                        effectedPlayers.Add(player);
+                        Coroutines.Add(Timing.RunCoroutine(DoSuction(player, ev.Projectile.Transform.position + (Vector3.up * 1.5f))));
+                    }
+                    else // Every room has exit = 1 door. If that is the case (SurfaceWarhead) we skip.
+                    {
+                        Log.Debug("ELSE::");
+                        effectedPlayers.Add(player);
+                        Coroutines.Add(Timing.RunCoroutine(DoSuction(player, ev.Projectile.Transform.position + (Vector3.up * 1.5f))));
+                        //vypocitat distance mezi nejblizsimi dvermi. bude to expensive
+                    }
                 }
+                else Log.Debug("Unable to linecast. " + line);
             }
             catch (Exception exception)
             {
