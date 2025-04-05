@@ -146,11 +146,10 @@ public class EmpGrenade : CustomGrenade
     /// <inheritdoc/>
     protected override void OnExploding(ExplodingGrenadeEventArgs ev)
     {
-        Log.Debug("EXPO!");
         ev.IsAllowed = false;
         Room room = Room.FindParentRoom(ev.Projectile.GameObject);
         Log.Debug(room.name);
-        TeslaGate? gate = null;
+        TeslaGate? _TeslaGate = null;
 
         Log.Debug($"{ev.Projectile.GameObject.transform.position} - {room.Position} - {Room.List.Count()}");
 
@@ -160,15 +159,14 @@ public class EmpGrenade : CustomGrenade
 
         if (DisableTeslaGates)
         {
-            foreach (TeslaGate teslaGate in TeslaGate.List)
+            if (ev.Projectile.Room.TeslaGate != null)
             {
-                if (Room.FindParentRoom(teslaGate.GameObject) == room)
-                {
-                    disabledTeslaGates.Add(teslaGate);
-                    gate = teslaGate;
-                    break;
-                }
+                TeslaGate.TryGet(ev.Projectile.Room.TeslaGate.Base, out TeslaGate teslagate);
+                Log.Debug("Added tesla gate to the disabled teslas list.");
+                disabledTeslaGates.Add(teslagate);
+                _TeslaGate = teslagate;
             }
+            else Log.Debug("No tesla gate in room.");
         }
 
         Log.Debug($"{room.Doors.Count()} - {room.Type}");
@@ -242,11 +240,12 @@ public class EmpGrenade : CustomGrenade
                 Log.Debug($"REMOVING LOCKED ROOM: {e}");
             }
 
-            if (gate != null)
+            if (_TeslaGate != null)
             {
                 try
                 {
-                    disabledTeslaGates.Remove(gate);
+                    Log.Debug("Removed tesla gate from the EMP list. " + _TeslaGate);
+                    disabledTeslaGates.Remove(_TeslaGate);
                 }
                 catch (Exception e)
                 {
@@ -272,10 +271,14 @@ public class EmpGrenade : CustomGrenade
 
     private void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
     {
-        foreach (TeslaGate gate in TeslaGate.List)
+        foreach (TeslaGate TeslaGate in TeslaGate.List)
         {
-            if (Room.FindParentRoom(gate.GameObject) == ev.Player.CurrentRoom && disabledTeslaGates.Contains(gate))
+            if (TeslaGate.Room == ev.Player.CurrentRoom && disabledTeslaGates.Contains(TeslaGate))
+            {
+                Log.Debug("Tesla Disabled by EMP Grenade!");
                 ev.IsAllowed = false;
+                break;
+            }
         }
     }
 }
