@@ -39,7 +39,7 @@ public class Config : IConfig
     /// Gets or sets a value indicating whether if debug mode is enabled.
     /// </summary>
     [Description("Whether or not debug messages should be displayed in the server console.")]
-    public bool Debug { get; set; } = true;
+    public bool Debug { get; set; } = false;
 
     /// <summary>
     /// Gets or sets a value indicating what subclasses should get what items, and their spawn chances.
