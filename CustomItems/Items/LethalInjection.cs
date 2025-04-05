@@ -116,10 +116,4 @@ public class LethalInjection : CustomItem
 
         ev.Player.RemoveItem(ev.Player.CurrentItem);
     }
-
-    private void OnUsingItemsa(UsedItemEventArgs ev)
-    {
-        if (!Check(ev.Player.CurrentItem))
-            return;
-    }
 }
